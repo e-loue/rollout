@@ -7,7 +7,7 @@ Still very much a work in progress.
 
 # Dependencies
 
-rollout requires `[django](http://www.djangoproject.com)`, '[redis-py](http://github.com/andymccurdy/redis-py)' and `[proclaim](http://github.com/asenchi/proclaim)` to work.
+rollout requires [django](http://www.djangoproject.com), [redis-py](http://github.com/andymccurdy/redis-py) and [proclaim](http://github.com/asenchi/proclaim) to work.
 
 # Usage
 
