@@ -67,26 +67,25 @@ class Command(BaseCommand):
         REDIS_DB = getattr(settings, "PROCLAIM_DB", 0)
 
         proclaim = Proclaim(Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB))
-        
         if options['rollout_activate']:
-            if 'rollout_percentage' in options:
+            if 'rollout_percentage' in options and options['rollout_percentage']:
                 proclaim.activate_percentage(feature, options['rollout_percentage'])
-            if 'rollout_user' in options:
+            if 'rollout_user' in options and options['rollout_user']:
                 user = User.objects.get(username=options['rollout_user'])
                 proclaim.activate_user(feature, user)
-            if 'rollout_group' in options:
+            if 'rollout_group' in options and options['rollout_group']:
                 group = Group.objects.get(name=options['rollout_group'])
-                proclaim.define_group(group.name, group.user_set.iterator())
-                proclaim.activate_group(feature, group.name)
+                proclaim.define_group(group.name, *group.user_set.all())
+                proclaim.active_group(feature, group.name)
         else:
-            if 'rollout_percentage' in options:
+            if 'rollout_percentage' in options and options['rollout_percentage']:
                 proclaim.deactivate_percentage(feature, options['rollout_percentage'])
-            if 'rollout_user' in options:
+            if 'rollout_user' in options and options['rollout_user']:
                 user = User.objects.get(username=options['rollout_user'])
                 proclaim.deactivate_user(feature, user)
-            if 'rollout_group' in options:
+            if 'rollout_group' in options and options['rollout_group']:
                 group = Group.objects.get(name=options['rollout_group'])
-                proclaim.define_group(group.name, group.user_set.iterator())
+                proclaim.define_group(group.name, *group.user_set.all())
                 proclaim.deactivate_group(feature, group.name)
     
     

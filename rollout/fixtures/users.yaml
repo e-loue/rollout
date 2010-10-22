@@ -4,7 +4,7 @@
     username: elmo
     first_name: Elmo
     last_name: Muppet
-    groups: []
+    groups: [1]
     is_active: true
     is_staff: false
     is_superuser: false
@@ -20,7 +20,7 @@
     username: abby
     first_name: Abigail
     last_name: Cadabby
-    groups: []
+    groups: [1]
     is_active: true
     is_staff: false
     is_superuser: false
