@@ -1,0 +1,31 @@
+- fields:
+    date_joined: 1985-11-18 09:00:00
+    email: elmo@sesamestreet.com
+    username: elmo
+    first_name: Elmo
+    last_name: Muppet
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_login: 2010-11-18 15:00:00
+    password: $$!
+    user_permissions: []
+  model: auth.user
+  pk: 1
+
+- fields:
+    date_joined: 2006-08-14 09:00:00
+    email: abby@sesamestreet.com
+    username: abby
+    first_name: Abigail
+    last_name: Cadabby
+    groups: []
+    is_active: true
+    is_staff: false
+    is_superuser: false
+    last_login: 2010-08-14 15:00:00
+    password: $$!
+    user_permissions: []
+  model: auth.user
+  pk: 2
