@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
-from django.conf import settings
 from django.template import Library, Variable, TemplateSyntaxError, Node
 from django.template.loader import render_to_string
 
-from redis import Redis
-from proclaim import Proclaim
-
-REDIS_HOST = getattr(settings, "PROCLAIM_HOST", "localhost")
-REDIS_PORT = getattr(settings, "PROCLAIM_PORT", 6379)
-REDIS_DB = getattr(settings, "PROCLAIM_DB", 0)
+from .. import rollout as proclaim
 
 register = Library()
 
@@ -18,14 +12,13 @@ class RollOutNode(Node):
         self.feature = feature
         self.template = template
         self.nodelist = nodelist
-        self.proclaim = Proclaim(Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB))
 
     def render(self, context):
         feature = self.feature.replace('"', '')
         user = Variable('user').resolve(context)
         if not user.is_authenticated():
             return ''
-        is_active = self.proclaim.is_active(feature, user)
+        is_active = proclaim.is_active(feature, user)
         if is_active:
             if self.template:
                 template = self.template.replace('"', '')

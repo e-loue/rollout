@@ -53,20 +53,11 @@ class Command(BaseCommand):
     def handle(self, feature=None, *args, **options):
         from django.conf import settings
         from django.contrib.auth.models import User, Group
-        try:
-            from redis import Redis
-            from proclaim import Proclaim
-        except ImportError:
-            raise CommandError("Depends on Proclaim and Redis.")
-
+        from ... import rollout as proclaim
+        
         if not feature:
             raise CommandError('You need to specify a feature name')
 
-        REDIS_HOST = getattr(settings, "PROCLAIM_HOST", "localhost")
-        REDIS_PORT = getattr(settings, "PROCLAIM_PORT", 6379)
-        REDIS_DB = getattr(settings, "PROCLAIM_DB", 0)
-
-        proclaim = Proclaim(Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB))
         if options['rollout_activate']:
             if 'rollout_percentage' in options and options['rollout_percentage']:
                 proclaim.activate_percentage(feature, options['rollout_percentage'])
