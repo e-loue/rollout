@@ -22,9 +22,8 @@ setup(
     classifiers = [
         "Development Status :: 4 - Beta",
         "Intended Audience :: Developers",
-        "Intended Audience :: Web Developers",
         "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independant",
+        "Operating System :: OS Independent",
         "Topic :: Software Development"
     ]
 )
