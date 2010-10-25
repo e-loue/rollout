@@ -51,7 +51,6 @@ class Command(BaseCommand):
     args = 'feature'
 
     def handle(self, feature=None, *args, **options):
-        from django.conf import settings
         from django.contrib.auth.models import User, Group
         from ... import rollout as proclaim
         
@@ -62,21 +61,25 @@ class Command(BaseCommand):
             if 'rollout_percentage' in options and options['rollout_percentage']:
                 proclaim.activate_percentage(feature, options['rollout_percentage'])
             if 'rollout_user' in options and options['rollout_user']:
-                user = User.objects.get(username=options['rollout_user'])
-                proclaim.activate_user(feature, user)
+                usernames = options['rollout_user'].split(',')
+                for user in User.objects.filter(username__in=usernames):
+                    proclaim.activate_user(feature, user)
             if 'rollout_group' in options and options['rollout_group']:
-                group = Group.objects.get(name=options['rollout_group'])
-                proclaim.define_group(group.name, *group.user_set.all())
-                proclaim.active_group(feature, group.name)
+                groups = options['rollout_group'].split(',')
+                for group in Group.objects.filter(name__in=groups):
+                    proclaim.define_group(group.name, *group.user_set.all())
+                    proclaim.active_group(feature, group.name)
         else:
             if 'rollout_percentage' in options and options['rollout_percentage']:
                 proclaim.deactivate_percentage(feature, options['rollout_percentage'])
             if 'rollout_user' in options and options['rollout_user']:
-                user = User.objects.get(username=options['rollout_user'])
-                proclaim.deactivate_user(feature, user)
+                usernames = options['rollout_user'].split(',')
+                for user in User.objects.filter(username__in=usernames):
+                    proclaim.deactivate_user(feature, user)
             if 'rollout_group' in options and options['rollout_group']:
-                group = Group.objects.get(name=options['rollout_group'])
-                proclaim.define_group(group.name, *group.user_set.all())
-                proclaim.deactivate_group(feature, group.name)
+                groups = options['rollout_group'].split(',')
+                for group in Group.objects.filter(name__in=groups):
+                    proclaim.define_group(group.name, *group.user_set.all())
+                    proclaim.deactivate_group(feature, group.name)
     
     

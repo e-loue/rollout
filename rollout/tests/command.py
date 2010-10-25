@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from StringIO import StringIO
-
 from django.test import TestCase
 from django.core import management
 
@@ -16,11 +14,23 @@ class RollOutCommandTest(TestCase):
     def test_activate_user(self):
         management.call_command('rollout', 'newfeature', rollout_activate=True, rollout_user="elmo")
     
+    def test_activate_users(self):
+        management.call_command('rollout', 'newfeature', rollout_activate=True, rollout_user="elmo,abby")
+    
     def test_deactivate_user(self):
         management.call_command('rollout', 'newfeature', rollout_activate=False, rollout_user="elmo")
     
+    def test_deactivate_users(self):
+        management.call_command('rollout', 'newfeature', rollout_activate=False, rollout_user="elmo,abby")
+    
     def test_activate_group(self):
         management.call_command('rollout', 'newfeature', rollout_activate=True, rollout_group="Sesame Street")
+    
+    def test_activate_group(self):
+        management.call_command('rollout', 'newfeature', rollout_activate=True, rollout_group="Sesame Street,Fairy")
+    
+    def test_deactivate_group(self):
+        management.call_command('rollout', 'newfeature', rollout_activate=False, rollout_group="Sesame Street,Fairy")
     
     def test_deactivate_group(self):
         management.call_command('rollout', 'newfeature', rollout_activate=False, rollout_group="Sesame Street")

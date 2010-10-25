@@ -20,7 +20,7 @@
     username: abby
     first_name: Abigail
     last_name: Cadabby
-    groups: [1]
+    groups: [1, 2]
     is_active: true
     is_staff: false
     is_superuser: false
