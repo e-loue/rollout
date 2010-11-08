@@ -68,7 +68,7 @@ class Command(BaseCommand):
                 groups = options['rollout_group'].split(',')
                 for group in Group.objects.filter(name__in=groups):
                     proclaim.define_group(group.name, *group.user_set.all())
-                    proclaim.active_group(feature, group.name)
+                    proclaim.activate_group(feature, group.name)
         else:
             if 'rollout_percentage' in options and options['rollout_percentage']:
                 proclaim.deactivate_percentage(feature, options['rollout_percentage'])
