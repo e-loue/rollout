@@ -5,10 +5,10 @@ from optparse import OptionValueError, make_option
 
 def check_target(option, opt_str, value, parser):
     """We only want to specify one target per action."""
-    TARGET_OPTS = ['-g', '-p', '-u']
-    TARGET_OPTS.remove(opt_str)
+    TARGET_OPTS = [parser.get_option(opt) for opt in '-g', '-p', '-u']
+    TARGET_OPTS.remove(parser.get_option(opt_str))
     for target in TARGET_OPTS:
-        dest = parser.get_option(target).dest
+        dest = target.dest
         if getattr(parser.values, dest, True):
             raise OptionValueError("you should not specify several targets")
         if hasattr(parser.values, dest):
